@@ -30,40 +30,38 @@ public class HelloController {
     }
 
 
-    // lives at /hello/hello
-    @RequestMapping(value="hello", method = RequestMethod.POST)
+    @RequestMapping(value = "hello", method = {RequestMethod.GET})
     @ResponseBody
-    public String createMessage(@RequestParam String name, @RequestParam String language) {
-        if (name == null) {
+    public String createMessage(@RequestParam String language, @RequestParam String name) {
+        if (name == "") {
             name = "World";
         }
 
         String greeting = "";
 
         if (language.equals("english")) {
-            greeting = "Hello";
+            greeting = "Hello, ";
         } else if (language.equals("spanish")) {
-            greeting = "Hola";
+            greeting = "Hola, ";
         } else if (language.equals("french")) {
-            greeting = "Bonjour";
+            greeting = "Bonjour, ";
         } else if (language.equals("german")) {
-            greeting = "Hallo";
+            greeting = "Hallo, ";
         } else if (language.equals("russian")) {
-            greeting = "Privet";
+            greeting = "Privet, ";
         }
 
-        return greeting + " " + name;
+        return greeting + name + "!";
     }
-
 
 
     @GetMapping("form")
     public String helloForm() {
         return "<html>" +
                 "<body>" +
-                "<form action='/hello' method='post'>" +   // submit a request to /hello
+                "<form action='/hello/hello' method='get'>" +
                 "<input type='text' name='name'>" +
-                "<select name='languages'>" +
+                "<select name='language'>" +
                 "<option value='english'>English</option>" +
                 "<option value='spanish'>Spanish</option>" +
                 "<option value='french'>French</option>" +
@@ -75,4 +73,5 @@ public class HelloController {
                 "</body>" +
                 "</html>";
     }
+
 }
